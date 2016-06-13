@@ -1,0 +1,97 @@
+{% extends "cognitivestyleapp/base.html" %}
+
+{% load static %}
+
+{% block style %}
+    <link type="text/x-scss" rel="stylesheet" href="{% static "cognitivestyleapp/style/cognitivestyle.scss" %}" />
+{% endblock style %}
+
+{% block script %}
+    <script type="text/javascript" src="{% static "cognitivestyleapp/external/raphael/raphael.js" %}"></script>
+    <script type="text/javascript" charset="utf-8" src="{% static "cognitivestyleapp/external/seedrandom/seedrandom.min.js" %}"></script>
+    <script type="text/coffeescript" charset="utf-8" src="{% static "cognitivestyleapp/script/lib.coffee" %}"></script>
+    <script type="text/coffeescript" charset="utf-8" src="{% static "cognitivestyleapp/script/experiment.coffee" %}"></script>
+    <script type="text/coffeescript" charset="utf-8" src="{% static "cognitivestyleapp/script/cognitivestyle.coffee" %}"></script>
+
+    <script type="text/coffeescript">
+        $(document).ready ->
+            request.debug = (request.debug == 'true')
+            request.subject ?= 'nobody'
+            request.action ?= 'run'
+            request.version = Number(request.version ? 2)
+            
+            window.exp = new CognitiveStyle
+                debug: request.debug
+                csrf: CSRF_TOKEN
+                subject: request.subject
+                version: request.version
+            
+            if not request.debug
+                seq = exp.do.Run().fire()
+            else
+                switch request.action
+                    when 'run'
+                        num_trials = exp.parameter.getDefaultNumTrials()
+                        num_trials = Number(window.prompt("How many trials?",String(num_trials)) ? num_trials)
+                        num_practice_trials = Math.min(num_trials, exp._instruct_num_trials)
+                        
+                        f_callback = (result) =>
+                            summary = exp.summaryStatistics result
+                            console.log summary
+                        
+                        seq = exp.do.Run
+                            num_trials: num_trials
+                            num_practice_trials: num_practice_trials
+                        
+                        if f_callback?
+                            seq.callback(f_callback)
+                        
+                        seq.fire()
+                    when 'instructions'
+                        f_callback = => exp.show.Text 'instructions done!'
+                        seq = exp.do.Instructions()
+                        seq.callback(f_callback).fire()
+                    when 'trials'
+                        num_trials = Number(window.prompt("How many trials?","10") ? 10)
+                        sequence_param = exp.parameter.TrialSequence
+                            num_trials: num_trials
+                        
+                        
+                        f_callback = (result) =>
+                            summary = exp.summaryStatistics result
+                            exp.showObject summary
+                        
+                        seq = exp.do.VVCompareTrials
+                            sequence_param: sequence_param
+                        seq.callback(f_callback).fire()
+                    when 'shapes'
+                        stim = exp.show.ShapeStimuli()
+                    when 'sequenceparams'
+                        console.log exp.getSequenceParams
+                            randomize: true
+                    when 'test'
+                        stim_param = exp.parameter.Stimulus()
+                        
+                        exp.show.VerbalStimulus
+                            stim_param: stim_param
+                    else
+                        alert "'#{request.action}' is an invalid action."
+            
+            
+    </script>
+{% endblock script %}
+
+{% block body %}
+    <script type="text/javascript">
+        window.CSRF_TOKEN = '{{ csrf_token }}'
+        
+        window.request = new Object()
+        {% for key,val in request.GET.items %}
+            window.request['{{ key }}'] = '{{ val }}';
+        {% endfor %}
+    </script>
+    
+    <div class="pure-g">
+        <div class="pure-u-1" id="experiment"></div>
+    </div>
+{% endblock body %}

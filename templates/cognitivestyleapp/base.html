@@ -1,0 +1,56 @@
+{% load static compress %}
+
+{# put non-outputting template tags here #}
+{% block tags %}{% endblock tags %}
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		{% block meta %}
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		{% endblock meta %}
+
+		{% block favicon %}<link rel="shortcut icon" href="{% static "cognitivestyleapp/images/favicon.png" %}" />{% endblock favicon %}
+
+		{# set the title through the view's "title" attribute #}
+		<title>{% block title %}cognitive style{% if view.title %}: {{ view.title }}{% endif %}{% endblock title %}</title>
+		
+		<link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+		{% block all_style %}{% compress css %}
+
+			{% block framework_style %}
+				<link type="text/css" rel="stylesheet" href="{% static "cognitivestyleapp/external/font-awesome/css/font-awesome.css" %}" />
+				<link type="text/css" rel="stylesheet" href="{% static "cognitivestyleapp/external/pure/pure.css" %}" />
+				<link type="text/css" rel="stylesheet" href="{% static "cognitivestyleapp/external/pure/grids-responsive.css" %}" />
+			{% endblock framework_style %}
+
+			{# the base style sheet to define the page format #}
+			{% block base_style %}
+				<link type="text/x-scss" rel="stylesheet" href="{% static "cognitivestyleapp/style/base/base.scss" %}" />
+			{% endblock base_style %}
+
+			{% block style %}{% endblock style %}
+
+		{% endcompress css %}{% endblock all_style %}
+
+		{# google analytics #}
+		{{ analytics_code }}
+	</head>
+
+<body {% block body_attr %}{% endblock body_attr %}>
+    {% block body %}{% endblock body %}
+
+	{% block all_script %}{% compress js %}
+		<script type="text/javascript" src="{% static "cognitivestyleapp/external/jquery/jquery.js" %}"></script>
+		
+		{# additional js: this is generally what subtemplates should use #}
+		{% block script %}{% endblock script %}
+	{% endcompress js %}{% endblock all_script %}
+
+	{% if 'dbg' in request.GET %}
+		<pre style="background: white">{% debug %}</pre>
+	{% endif %}
+</body>
+
+</html>

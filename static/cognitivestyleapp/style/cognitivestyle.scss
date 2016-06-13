@@ -1,0 +1,51 @@
+@import "common/vars";
+@import "common/fonts";
+
+html,body, div.pure-g {
+	height: 100%;
+	
+	overflow: hidden;
+}
+
+#control {
+	height: 100%;
+	
+	background: $grayish-lightest;
+	border-right: 1px solid black;
+
+	font-size: 10pt;
+
+	h1, h2 {
+		font-size: 14pt;
+		padding: 0;
+		margin: 0;
+	}
+	h2 {
+		margin-top: 1em;
+	}
+	label {
+		font-weight: normal;
+		margin: 0;
+		padding: 0;
+	}
+
+	ul.instructions {
+		margin-top: 0;
+		padding-left: 4px;
+		list-style-position: inside;
+
+		li {
+			padding-left: 0;
+		}
+	}
+}
+
+#experiment {
+	/*position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	*/
+	height: 100%;
+	overflow: hidden;
+}

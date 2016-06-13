@@ -1,0 +1,126 @@
+//Apex New
+	@font-face {
+		font-family: 'Apex New';
+		font-style: normal;
+		font-weight: normal;
+		src: url('/static/roguecheddarapp/external/font-apex/ApexNew-Book.eot') format('eot'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-Book.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-Book.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-Book.svg') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Apex New';
+		font-style: italic;
+		font-weight: normal;
+		src: url('/static/roguecheddarapp/external/font-apex/ApexNew-BookItalic.eot') format('eot'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-BookItalic.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-BookItalic.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-BookItalic.svg') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Apex New';
+		font-style: normal;
+		font-weight: bold;
+		src: url('/static/roguecheddarapp/external/font-apex/ApexNew-Medium.eot') format('eot'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-Medium.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-Medium.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-Medium.svg') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Apex New';
+		font-style: italic;
+		font-weight: bold;
+		src: url('/static/roguecheddarapp/external/font-apex/ApexNew-MediumItalic.eot') format('eot'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-MediumItalic.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-Mediumtalic.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexNew-MediumItalic.svg') format('svg');
+	}
+
+//Apex Serif
+	@font-face {
+		font-family: 'Apex Serif';
+		font-style: normal;
+		font-weight: normal;
+		src: url('/static/roguecheddarapp/external/font-apex/ApexSerif-Book.eot') format('eot'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-Book.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-Book.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-Book.svg') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Apex Serif';
+		font-style: italic;
+		font-weight: normal;
+		src: url('/static/roguecheddarapp/external/font-apex/ApexSerif-MediumItalic.eot') format('eot'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-MediumItalic.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-MediumItalic.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-MediumItalic.svg') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Apex Serif';
+		font-style: normal;
+		font-weight: bold;
+		src: url('/static/roguecheddarapp/external/font-apex/ApexSerif-Medium.eot') format('eot'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-Medium.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-Medium.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-Medium.svg') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Apex Serif';
+		font-style: italic;
+		font-weight: bold;
+		src: url('/static/roguecheddarapp/external/font-apex/ApexSerif-MediumItalic.eot') format('eot'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-MediumItalic.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-MediumItalic.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-apex/ApexSerif-MediumItalic.svg') format('svg');
+	}
+
+//Liberation Sans
+	@font-face {
+		font-family: 'Liberation Sans';
+		font-style: normal;
+		font-weight: normal;
+		src: url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Regular-webfont.eot');
+		src: url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Regular-webfont.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Regular-webfont.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Regular-webfont.svg#liberation_sansbold_italic') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Liberation Sans';
+		font-style: normal;
+		font-weight: bold;
+		src: url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Bold-webfont.eot');
+		src: url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Bold-webfont.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Bold-webfont.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Bold-webfont.svg#liberation_sansbold_italic') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Liberation Sans';
+		font-style: italic;
+		font-weight: normal;
+		src: url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Italic-webfont.eot');
+		src: url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Italic-webfont.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Italic-webfont.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-Italic-webfont.svg#liberation_sansbold_italic') format('svg');
+	}
+
+	@font-face {
+		font-family: 'Liberation Sans';
+		font-style: italic;
+		font-weight: bold;
+		src: url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-BoldItalic-webfont.eot');
+		src: url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-BoldItalic-webfont.woff') format('woff'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-BoldItalic-webfont.ttf') format('truetype'),
+			 url('/static/roguecheddarapp/external/font-liberation_sans/LiberationSans-BoldItalic-webfont.svg#liberation_sansbold_italic') format('svg');
+	}

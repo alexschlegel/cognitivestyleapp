@@ -1,0 +1,107 @@
+//construct some lists for form field elements
+	$input_types: text, password, submit, email, url, date, month, time, datetime, datetime-local, week, number, search, tel, color;
+	$form_other: select, textarea;
+
+	$input_fields: ();
+	@each $type in $input_types {
+		$input_fields: append($input_fields, unquote('.pure-form input[type="#{$type}"]'), comma);
+	}
+
+	$form_fields: $input_fields;
+	@each $field in $form_other {
+		$form_fields: append($form_fields, unquote('.pure-form #{$field}'), comma);
+	}
+
+	$form_fields_focus: ();
+	@each $field in $form_fields {
+		$form_fields_focus: append($form_fields_focus, unquote('#{$field}:focus'), comma);
+	}
+
+//colors
+	$blue: rgb(0,128,255);
+	$blue-dark: rgb(0,32,96);
+	$blue-light: rgb(224,224,255);
+
+	$orange: rgb(255,192,0);
+	$orange-dark: rgb(248,96,0);
+	$orange-light: rgb(255,240,128);
+
+	$green: rgb(96,208,160);
+	$green-darkish: rgb(64,176,128);
+	$green-darker: rgb(48,144,96);
+	$green-dark: rgb(0,112,64);
+	$green-light: rgb(224,255,128);
+
+	$rust: rgb(192,72,32);
+	$red: rgb(255,64,0);
+	$red-dark: rgb(208,0,0);
+	$red-light: rgb(255,224,208);
+
+	$yellow: rgb(255,248,0);
+	$yellow-dark: rgb(224,160,0);
+	$yellow-light: rgb(255,255,128);
+
+	$gray-dark: rgb(64,64,64);
+	$gray: rgb(144,144,144);
+	$gray-light: rgb(208,208,208);
+
+	$dark: darken($blue-dark,16%);
+	$black: darken($blue-dark,20%);
+	$white: white;
+	$none: rgba(255,255,255,0);
+	$none-kindof: rgba(255,255,255,0.5);
+	$none-almost: rgba(255,255,255,0.25);
+
+	$grayish-dark: rgb(80,72,64);
+	$grayish-darker: darken($grayish-dark,5%);
+	$grayish-darkest: darken($grayish-dark,10%);
+	$grayish: lighten($grayish-dark,20%);
+	$grayish-light: lighten($grayish,20%);
+	$grayish-lighter: lighten($grayish,30%);
+	$grayish-lightest: lighten($grayish,50%);
+
+	$brown: rgb(128,64,32);
+
+//fonts
+	$font-base-size: 10pt;
+
+	$font-huger: 1.4em;
+	$font-larger: 1.2em;
+	$font-normal: 1em;
+	$font-smaller: 0.9em;
+	$font-tinier: 0.8em;
+
+	$font-size-heading: $font-larger;
+	$font-size-instruction: $font-normal;
+	$font-size-prompt: $font-normal;
+
+$color-text: $grayish-dark;
+$color-inactive: $brown;
+$color-active: $orange;
+
+$color-selected: $grayish-darker;
+$color-success: $green;
+$color-info: $blue;
+$color-warning: $orange-dark;
+$color-error: $red;
+
+$color-superheading: $grayish-darkest;
+$color-heading: $grayish-dark;
+$color-subheading: $rust;
+
+$color-border: $grayish;
+$color-border-alt: $brown;
+
+$color-background-header: $none-kindof;
+$color-background-nav: $none;
+$color-background-content: $none-kindof;
+$color-background: $none;
+$color-background-alt: $grayish-darkest;
+
+$border: 1px solid $color-border;
+$border-section: 32px solid $grayish-darkest;
+$border-debug: 1px solid red;
+
+$size-small: 48em;
+$size-medium: 68em;
+$size-large: 78em;

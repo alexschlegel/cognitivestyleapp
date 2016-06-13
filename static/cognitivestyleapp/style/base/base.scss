@@ -1,0 +1,56 @@
+@import "../common/vars";
+@import "../common/fonts";
+
+body {
+    background: none;
+    
+    line-height: 1.7em;
+    color: $color-text;
+    font-size: 13px;
+}
+
+@media (min-width: $size-small) {
+    body {
+        font-size: 16px;
+    }
+}
+
+ul, li {
+    line-height: 1em;
+}
+
+html,
+button,
+input,
+select,
+textarea {
+    font-family: "Liberation Sans", Helvetica, Arial, sans-serif;
+}
+.pure-g [class *= "pure-u"] {
+    font-family: "Liberation Sans", Helvetica, Arial, sans-serif;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, label {
+    font-family: "Apex New", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+
+    color: $color-heading;
+
+    a {
+        color: $color-heading;
+    }
+}
+
+
+a {
+    text-decoration: none;
+
+    color: $color-inactive;
+}
+a:hover {color: $color-active}
