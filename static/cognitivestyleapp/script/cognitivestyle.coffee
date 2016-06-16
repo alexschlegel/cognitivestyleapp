@@ -22,7 +22,7 @@ window.CognitiveStyle = class CognitiveStyle extends Experiment
     
     constructor: (options=null) ->
         options = merge_object {
-            data_url: '/research/cognitivestyle/data/'
+            data_url: 'data/'
             version: 2
         }, (options ? {})
         
