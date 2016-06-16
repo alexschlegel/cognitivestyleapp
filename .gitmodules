@@ -1,0 +1,3 @@
+[submodule "static/cognitivestyleapp/external/seedrandom"]
+	path = static/cognitivestyleapp/external/seedrandom
+	url = https://github.com/davidbau/seedrandom.git
