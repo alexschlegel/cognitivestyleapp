@@ -1,6 +1,8 @@
 window.CognitiveStyle = class CognitiveStyle extends Experiment
     version: null
     
+    _do_questionnaires: false
+    
     _advance_key: 'space'
     
     _key_yes: 'F'
@@ -20,22 +22,166 @@ window.CognitiveStyle = class CognitiveStyle extends Experiment
     _col_padding: 32
     _test_ring_radius: 'tight'
     
+    _questionnaires:
+        'debrief':  [
+                        {key:'title', value:'Questionnaire 1 of 4'}
+                        {key:'instruction', value:'Please answer the following questions about the strategy you used while completing the previous task.'}
+                        {key:'choice', value: [
+                            'tried to remember just the words.'
+                            'tried to remember just the picture.'
+                            'tried to remember both the words and the picture.'
+                            ]}
+                        {key:'item', value:"When a trial started with <em>words</em>, I:"}
+                        {key:'item', value:"When a trial started with a <em>picture</em>, I:"}
+                        {key:'choice', value: [
+                            'Yes'
+                            'No'
+                            ]}
+                        {key:'item', value:"Did you find it easier when a trial <em>started</em> with pictures than with words?"}
+                        {key:'item', value:"Did you find it easier when a trial <em>ended</em> with pictures than with words?"}
+                    ]
+        'vvq':      [
+                        {key:'title', value:'Questionnaire 2 of 4'}
+                        {key:'instruction', value:'Please read each statement and rate it on the 5-point scale. Choose "5" to indicate that you absolutely agree that the statement describes you, and choose "1" to indicate that you totally disagree with the statement. Choose "3" if you not sure, but try to make a choice. It is very important that you answer all the items in the questionnaire.'}
+                        {key:'scale', value: [
+                            'totally disagree with the statement'
+                            'partially disagree with the statement'
+                            'not sure'
+                            'partially agree with the statement'
+                            'totally agree with the statement'
+                            ]}
+                        {key:'item', value:"I can easily think of synonyms for words."}
+                        {key:'item', value:"I can hardly ever remember my dreams."}
+                        {key:'item', value:"I dislike looking words up in dictionaries."}
+                        {key:'item', value:"I dislike word games like crossword puzzles."}
+                        {key:'item', value:"I don't believe that anyone can think in terms of mental pictures."}
+                        {key:'item', value:"I don't like maps or diagrams in books."}
+                        {key:'item', value:"I enjoy daydreaming."}
+                        {key:'item', value:"I enjoy doing work that requires the use of words."}
+                        {key:'item', value:"I enjoy learning new words."}
+                        {key:'item', value:"I find illustrations or diagrams help me when I'm reading."}
+                        {key:'item', value:"I find maps helpful in finding my way around a new city."}
+                        {key:'item', value:"I have a hard time making a \"mental picture\" of a place that I've only been to a few times."}
+                        {key:'item', value:"I have a hard time remembering the words to songs."}
+                        {key:'item', value:"I have always disliked jigsaw puzzles."}
+                        {key:'item', value:"I have better than average fluency in using words."}
+                        {key:'item', value:"I like newspaper articles that have graphs."}
+                        {key:'item', value:"I often dream about things I'd like to be."}
+                        {key:'item', value:"I prefer to read instructions about how to do something rather than have someone show me."}
+                        {key:'item', value:"I read rather slowly."}
+                        {key:'item', value:"I seldom daydream. "}
+                        {key:'item', value:"I seldom dream."}
+                        {key:'item', value:"I seldom fantasize."}
+                        {key:'item', value:"I seldom use diagrams to explain things."}
+                        {key:'item', value:"I spend little time attempting to increase my vocabulary."}
+                        {key:'item', value:"My dreams are extremely vivid."}
+                        {key:'item', value:"My dreams are rather indistinct and hazy."}
+                        {key:'item', value:"My dreams are sometimes so vivid I feel as though I actually experience the scene."}
+                        {key:'item', value:"My powers of imagination are higher than average."}
+                        {key:'item', value:"The old saying \"A picture is worth a thousand words\" is certainly true for me."}
+                        {key:'item', value:"When I read books with maps in them, I refer to the maps a lot."}
+                    ]
+        'osivq':    [
+                        {key:'title', value:'Questionnaire 3 of 4'}
+                        {key:'instruction', value:'Please read each statement and rate it on the 5-point scale. Choose "5" to indicate that you absolutely agree that the statement describes you, and choose "1" to indicate that you totally disagree with the statement. Choose "3" if you not sure, but try to make a choice. It is very important that you answer all the items in the questionnaire.'}
+                        {key:'scale', value: [
+                            'totally disagree with the statement'
+                            'partially disagree with the statement'
+                            'not sure'
+                            'partially agree with the statement'
+                            'totally agree with the statement'
+                            ]}
+                        {key:'item', value:"Architecture interests me more than painting."}
+                        {key:'item', value:"Essay writing is difficult for me and I do not enjoy doing it at all."}
+                        {key:'item', value:"I am always aware of sentence structure."}
+                        {key:'item', value:"I am good in playing spatial games involving constructing from blocks and paper (e.g. Lego, Tetris, Origami)."}
+                        {key:'item', value:"I can close my eyes and easily picture a scene that I have experienced."}
+                        {key:'item', value:"I can easily imagine and mentally rotate three-dimensional geometric figures."}
+                        {key:'item', value:"I can easily remember a great deal of visual details that someone else might never notice. For example, I would just automatically take some things in, like what colour is a shirt someone wears or what colour are his/her shoes."}
+                        {key:'item', value:"I can easily sketch a blueprint for a building I am familiar with."}
+                        {key:'item', value:"I enjoy being able to rephrase my thoughts in many ways for variety's sake in both writing and speaking."}
+                        {key:'item', value:"I enjoy pictures with bright colours and unusual shapes like the ones in modern art."}
+                        {key:'item', value:"I find it difficult to imagine how a three-dimensional geometric figure would exactly look like when rotated."}
+                        {key:'item', value:"I have a photographic memory."}
+                        {key:'item', value:"I have better than average fluency in using words."}
+                        {key:'item', value:"I have difficulty expressing myself in writing."}
+                        {key:'item', value:"I have excellent abilities in technical graphics."}
+                        {key:'item', value:"I normally do not experience many spontaneous vivid images; I use my mental imagery mostly when attempting to solve some problems like the ones in mathematics."}
+                        {key:'item', value:"I prefer schematic diagrams and sketches when reading a textbook instead of colourful and pictorial illustrations."}
+                        {key:'item', value:"I remember everything visually. I can recount what people wore to a dinner and I can talk about the way they sat and the way they looked probably in more detail than I could discuss what they said."}
+                        {key:'item', value:"I sometimes have a problem expressing exactly what I want to say."}
+                        {key:'item', value:"I tell jokes and stories better than most people."}
+                        {key:'item', value:"I usually do not try to visualize or sketch diagrams when reading a textbook."}
+                        {key:'item', value:"I was very good in 3D geometry as a student."}
+                        {key:'item', value:"I would rather have a verbal description of an object or person than a picture."}
+                        {key:'item', value:"If I were asked to choose among engineering professions, or visual arts, I would choose visual arts."}
+                        {key:'item', value:"If I were asked to choose between engineering professions and visual arts, I would prefer engineering."}
+                        {key:'item', value:"If someone were to give me two-digit numbers to add (e.g. 43 and 32) I would simply do the adding without visualizing the numbers."}
+                        {key:'item', value:"In school, I had no problems with geometry."}
+                        {key:'item', value:"My graphic abilities would make a career in architecture relatively easy for me."}
+                        {key:'item', value:"My images are more like schematic representations of things and events rather than like detailed pictures."}
+                        {key:'item', value:"My images are more schematic than colourful and pictorial."}
+                        {key:'item', value:"My images are very colourful and bright."}
+                        {key:'item', value:"My images are very vivid and photographic."}
+                        {key:'item', value:"My mental images of different objects very much resemble the size, shape and colour of actual objects that I have seen."}
+                        {key:'item', value:"My verbal abilities would make a career in language arts relatively easy for me."}
+                        {key:'item', value:"My verbal skills are excellent."}
+                        {key:'item', value:"My visual images are in my head all the time. They are just right there."}
+                        {key:'item', value:"Putting together furniture kits (e.g. a TV stand or a chair) is much easier for me when I have detailed verbal instructions than when I only have a diagram or picture."}
+                        {key:'item', value:"Sometimes my images are so vivid and persistent that it is difficult to ignore them."}
+                        {key:'item', value:"When entering a familiar store to get a specific item, I can easily picture the exact location of the target item, the shelf it stands on, how it is arranged and the the shelf it stands on, how it is arranged and the surrounding articles."}
+                        {key:'item', value:"When explaining something, I would rather give verbal explanations than make drawings or sketches."}
+                        {key:'item', value:"When I hear a radio announcer or a DJ I've never actually seen, I usually find myself picturing what he or she might look like."}
+                        {key:'item', value:"When I imagine the face of a friend, I have a perfectly clear and bright image."}
+                        {key:'item', value:"When reading fiction, I usually form a clear and detailed mental picture of a scene or room that has been described."}
+                        {key:'item', value:"When remembering a scene, I use verbal descriptions rather than mental pictures."}
+                        {key:'item', value:"When thinking about an abstract concept (or building), I imagine an abstract schematic building in my mind or its blueprint rather than a specific concrete building."}
+                    ]
+        'vviq':     [
+                        {key:'title', value:'Questionnaire 4 of 4'}
+                        {key:'instruction', value:"<p>Please rate the vividness of each image by reference to the rating scale shown.</p><p>Think of some relative or friend whom you frequently see (but who is not with you at present), and consider carefully the picture that comes before your mind's eye.  Then rate the following items:</p>"}
+                        {key:'scale', value: [
+                            'perfectly clear and as vivid as normal vision'
+                            'clear and reasonably vivid'
+                            'moderately clear and vivid'
+                            'vague and dim'
+                            'no image at all [only "knowing" that you are thinking of the object]'
+                            ]}
+                        {key:'item', value:"The exact contour of face, head, shoulders, and body."}
+                        {key:'item', value:"Characteristic poses of head, attitudes of body, etc."}
+                        {key:'item', value:"The precise carriage, length of step, etc., in walking."}
+                        {key:'item', value:"The different colors worn in some familiar clothes."}
+                        {key:'instruction', value:"<p>Please rate the vividness of each image by reference to the rating scale shown.</p><p>Visualize a rising sun.  Consider carefully the picture that comes before your mind's eye.  Then rate the following items:</p>"}
+                        {key:'item', value:"The sun is rising above the horizon into a hazy sky."}
+                        {key:'item', value:"The sky clears and surrounds the sun with blueness."}
+                        {key:'item', value:"Clouds.  A storm blows up, with flashes of lightning."}
+                        {key:'item', value:"A rainbow appears."}
+                        {key:'instruction', value:"<p>Please rate the vividness of each image by reference to the rating scale shown.</p><p>Think of the front of a shop to which you often go.  Consider the picture that comes before your mind's eye.  Then rate the following items:</p>"}
+                        {key:'item', value:"The overall appearance of the shop from the opposite side of the road."}
+                        {key:'item', value:"A window display including colors, shapes, and details of   individual items for sale."}
+                        {key:'item', value:"You are near the entrance.  The color, shape, and details of the door."}
+                        {key:'item', value:"You enter the shop and go to the counter.  The counter assistant serves you.  Money changes hands."}
+                        {key:'instruction', value:"<p>Please rate the vividness of each image by reference to the rating scale shown.</p><p>Finally, think of a country scene which involves trees, mountains and a lake.  Consider the picture that comes before your mind's eye.  Then rate the following items:</p>"}
+                        {key:'item', value:"The contours of the landscape."}
+                        {key:'item', value:"The color and shape of the trees."}
+                        {key:'item', value:"The color and shape of the lake."}
+                        {key:'item', value:"A strong wind blows on the trees and on the lake, causing waves."}
+                    ]
+    
     constructor: (options=null) ->
         options = merge_object {
             data_url: 'data/'
             version: 2
+            questionnaires: true
         }, (options ? {})
         
         #set the version
         @version = options.version
         if not @version in [1, 2] then throw 'invalid version'
         
+        @_do_questionnaires = options.questionnaires
+        
         super options
-    
-    fetchCompletionCode: (result, callback) =>
-        @data.call 'completioncode', [result],
-            success: (result) => callback(result.output)
-            error: (status, err) => callback(err)
     
     summaryStatistics: (result) =>
         stat = @_summaryStatisticsAll result
@@ -338,6 +484,8 @@ window.CognitiveStyle = class CognitiveStyle extends Experiment
                 options.randomize ?= true
                 options.save ?= true
                 
+                @result = {}
+                
                 @_sequence_param = @root.parameter.getSequenceParam
                     num_trials: options.num_trials
                     randomize: options.randomize
@@ -347,6 +495,9 @@ window.CognitiveStyle = class CognitiveStyle extends Experiment
                     (c) => @_doInstructions(c, options)
                     (c) => @_doTrials(c, options)
                 ]
+                
+                if @root._do_questionnaires
+                    f.push (c) => @_doQuestionnaires(c, options)
                 
                 next = ('callback' for [1..f.length])
                 
@@ -381,9 +532,26 @@ window.CognitiveStyle = class CognitiveStyle extends Experiment
                     sequence_param: @_sequence_param
                 }
                 seq = @root.do.VVCompareTrials options
-                seq.callback (result) => @result = result
+                seq.callback (result) => @result['trials'] = result
                 if callback? then seq.callback(callback)
                 seq.fire()
+            
+            _doQuestionnaires: (callback, options) =>
+                #create the questionnaires
+                q = (@root.do.Questionnaire key,value for key,value of @root._questionnaires)
+                
+                #callbacks for all but that last one
+                for idx in [0..q.length-2]
+                    q[idx].callback ((i) => (res) =>
+                        @result[q[i]._key] = res
+                        q[i+1].fire()
+                        )(idx)
+                #callbacks for the last one
+                q[q.length-1].callback (res) =>
+                    @result[q[q.length-1]._key] = res
+                if callback? then q[q.length-1].callback(callback)
+                    
+                q[0].fire()
             
             _saveResults: (result) =>
                 @_saving_stim = @root.show.Text 'Sending results. Please wait...',

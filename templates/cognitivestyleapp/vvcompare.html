@@ -19,12 +19,14 @@
             request.subject ?= 'nobody'
             request.action ?= 'run'
             request.version = Number(request.version ? 2)
+            request.questionnaires ?= true
             
             window.exp = new CognitiveStyle
                 debug: request.debug
                 csrf: CSRF_TOKEN
                 subject: request.subject
                 version: request.version
+                questionnaires: request.questionnaires
             
             if not request.debug
                 seq = exp.do.Run().fire()
@@ -70,14 +72,12 @@
                         console.log exp.getSequenceParams
                             randomize: true
                     when 'test'
-                        stim_param = exp.parameter.Stimulus()
+                        q = (exp.do.Questionnaire key,value for key,value of exp._questionnaires)
                         
-                        exp.show.VerbalStimulus
-                            stim_param: stim_param
+                        q[0].fire()
+                    when 'none'
                     else
                         alert "'#{request.action}' is an invalid action."
-            
-            
     </script>
 {% endblock script %}
 

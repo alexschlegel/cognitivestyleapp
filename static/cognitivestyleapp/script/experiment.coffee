@@ -78,6 +78,10 @@ window.Experiment = class Experiment
                 color: options.background
                 width: @width()
                 height: @height()
+        
+        #warn about leaving
+        $(window).on 'beforeunload', (e) ->
+            e.returnValue = 'This will exit the experiment. Are you sure?'
     
     showObject: (obj) =>
         console.log obj
@@ -760,6 +764,205 @@ window.Experiment = class Experiment
                             f()
                     @_callback_queue = null
                 @
+        
+        # administer a questionnaire
+        Questionnaire: (key, q) => new @ClassDoQuestionnaire(@root, key, q)
+        ###
+            key: the questionnaire key
+            q:  the questionnaire definition. an array of objects specifying the
+                questionnaire sequence. each object in the array has a 'key' and
+                a 'value' element. valid keys are:
+                    title: the questionnaire title
+                    instruction: the instruction prompt
+                    scale: an array of descriptions for Likert scale items
+                    item: a questionnaire item prompt
+                specifying any of these overwrite their previous values
+            options:
+                callback: a function to call once the questionnaire is
+                            completed. takes the array of responses as input.
+        ###
+        ClassDoQuestionnaire: class window.ExperimentClassDoQuestionnaire extends ExperimentClassDoAction
+            _key: null
+            _q: null
+            
+            _idx: null
+            
+            result: null
+            
+            constructor: (root, key, q, options) ->
+                f = @_do
+                
+                @_key = key
+                @_q = q
+                @result = {t: {}}
+                
+                super root, f
+            
+            callback: (f=null) =>
+                if f?
+                    super () => f(@result)
+                else
+                    super()
+            
+            fire: () =>
+                @fire_time = @root.time.now()
+                @f()
+            
+            _do: () =>
+                @_startQuestionnaire()
+            
+            _doStep: (idx=null, do_items=true, stop_at=null) =>
+                @_idx = Math.max(0,idx ? @_idx+1)
+                
+                if @_idx >= @_q.length
+                    @_endQuestionnaire()
+                    return
+                    
+                key = @_q[@_idx].key
+                value = @_q[@_idx].value
+                do_next = true
+                switch key
+                    when 'title', 'instruction'
+                        @_element(key).html value
+                    when 'scale'
+                        el = @_element('response')
+                        el.text ''
+                        for response, index in value
+                            input_value = index+1
+                            el.append "<input type='radio' name='response' value='#{input_value}'>#{input_value} (#{response})<br>"
+                            el.find("input[name=response][value=#{input_value}]").on 'click', ((v) => =>
+                                @_recordResponse(v)
+                                )(input_value)
+                    when 'choice'
+                        el = @_element('response')
+                        el.text ''
+                        for response, index in value
+                            input_value = index+1
+                            el.append "<input type='radio' name='response' value='#{input_value}'>#{response}<br>"
+                            el.find("input[name=response][value=#{input_value}]").on 'click', ((v) => =>
+                                @_recordResponse(v)
+                                )(input_value)
+                    when 'item'
+                        if do_items
+                            do_next = false
+                            
+                            n = @_getItemNumber()
+                            c = @_getItemCount()
+                            
+                            @_error()
+                            @_element('back').toggle(n!=1)
+                            
+                            if @_idx+1 >= @_q.length
+                                @_element('submit').prop 'value', 'Submit Questionnaire'
+                            else
+                                @_element('submit').prop 'value', 'Next'
+                            
+                            @_element('prompt').html "#{n} of #{c}: #{value}"
+                            
+                            @_setResponse()
+                    else throw 'invalid key'
+                
+                if do_next and (!stop_at? or @_idx<stop_at) then @_doStep(null, do_items, stop_at)
+            
+            _startQuestionnaire: () =>
+                @result.t.start = @root.time.now()
+                
+                #initialize the responses
+                c = @_getItemCount()
+                @result.response = Array(c)
+                @result.t.response = Array(c)
+                
+                #initialize the form
+                body = $('body')
+                body.append "<div class='questionnaire' id='#{@_htmlID()}'>
+                                <h1 id='#{@_htmlID('title')}'></h1>
+                                <div class='instruction' id='#{@_htmlID('instruction')}'></div>
+                                <div class='item' id='#{@_htmlID('item')}'>
+                                    <div class='prompt' id='#{@_htmlID('prompt')}'></div>
+                                    <div class='response' id='#{@_htmlID('response')}'></div>
+                                </div>
+                                <div class='footer' id='#{@_htmlID('footer')}'>
+                                    <div class='error' id='#{@_htmlID('error')}'></div>
+                                    <input type='button' value='Back' id='#{@_htmlID('back')}'>
+                                    <input type='button' value='Next' id='#{@_htmlID('submit')}'>
+                                </div>
+                            </div>"
+                
+                #set the button actions
+                @_element('submit').on 'click', =>
+                    response = @_getResponse()
+                    
+                    if response?
+                        @_recordResponse(response)
+                        @_doStep @_idx+1
+                    else
+                        @_error 'null_response'
+                @_element('back').on 'click', =>
+                    @_goBack()
+                
+                #execute the first step
+                @_doStep(0)
+            
+            _endQuestionnaire: () =>
+                @result.t.end = @root.time.now()
+                @_element().remove()
+                @callback()
+            
+            _getItemCount: () =>
+                c = 0
+                c++ for obj in @_q when obj.key=='item'
+                c
+            _getItemNumber: (idx=null) =>
+                idx ?= @_idx
+                idx_item = @_getNextItem(idx-1)
+                
+                n = 0
+                n++ for obj in @_q[0..idx_item] when obj.key=='item'
+                n
+            _getPreviousItem: (idx=null) =>
+                idx ?= @_idx
+                idx_prev = null
+                for idx_prev in [idx-1..0]
+                    if @_q[idx_prev].key == 'item'
+                        break
+                idx_prev
+            _getNextItem: (idx=null) =>
+                idx ?= @_idx
+                idx_next = null
+                for idx_next in [idx+1..@_q.length-1]
+                    if @_q[idx_next].key == 'item'
+                        break
+                idx_next
+            
+            _htmlID: (el='questionnaire') =>
+                switch el
+                    when 'questionnaire' then "#{el}_#{@_key}"
+                    else "#{@_htmlID()}_#{el}"
+            _element: (el='questionnaire') =>
+                $("##{@_htmlID(el)}")
+            
+            _error: (error_type) =>
+                el = @_element('error')
+                el.text switch error_type
+                    when 'null_response' then 'You must choose a response.'
+                    else ''
+            _getResponse: () =>
+                response = @_element('response').find('input[name=response]:checked').val()
+                if response? then response = Number(response)
+            _setResponse: () =>
+                idx = @_getItemNumber()-1
+                response = @result.response[idx] ? (if @root.debug then 1 else null)
+                @_element('response').find('input[name=response]').val([response])
+            _recordResponse: (response) =>
+                idx = @_getItemNumber()-1
+                @result.t.response[idx] = @root.time.now()
+                @result.response[idx] = response
+            
+            _goBack: () =>
+                idx_pre = @_getPreviousItem()
+                @_doStep 0, false, idx_pre
+                @_doStep idx_pre
+                
         
         # do a sequence of things
         Sequence: (f, next=null, options=null) => new @ClassDoSequence(@root, f, next, options)
